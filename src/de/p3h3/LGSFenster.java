@@ -34,19 +34,16 @@ public class LGSFenster{
                     @Override
                     public void insertUpdate(DocumentEvent e) {
                         insertIntoMatrix();
-                        return;
                     }
 
                     @Override
                     public void removeUpdate(DocumentEvent e) {
                         insertIntoMatrix();
-                        return;
                     }
 
                     @Override
                     public void changedUpdate(DocumentEvent e) {
                         insertIntoMatrix();
-                        return;
                     }
 
                     public void insertIntoMatrix(){
@@ -54,7 +51,10 @@ public class LGSFenster{
                         try{
                             koeffizientenMatrix[finalI][finalJ] = Double.parseDouble(text);
                         }catch (NumberFormatException e){
-                            return;
+                            JOptionPane.showMessageDialog(f,
+                                    "Bitte eine Zahl eingeben!",
+                                    "Eingegebene Zeichen",
+                                    JOptionPane.WARNING_MESSAGE);
                         }
                     }
                 });
@@ -67,9 +67,7 @@ public class LGSFenster{
         ergebnisLabel = new JLabel("L={}");
         subPanel1.add(ergebnisLabel);
         JButton berechnenButton = new JButton("Berechnen!");
-        berechnenButton.addActionListener((e) -> {
-            berechnen();
-        });
+        berechnenButton.addActionListener((e) -> berechnen());
         subPanel1.add(berechnenButton);
         panel.add(subPanel1);
 
@@ -103,7 +101,7 @@ public class LGSFenster{
 
         // erste unbekannte ausrechnen
         unbekannte[0] = km[km.length-1][km[km.length-1].length-1] / km[km.length-1][km[km.length-1].length-2];
-        System.out.println(unbekannte[0]);
+        //System.out.println(unbekannte[0]);
 
         for(int i = 1; i < unbekannte.length; i++){
             double[] aktuellegleichung = km[km.length - i - 1].clone();
@@ -114,24 +112,24 @@ public class LGSFenster{
             unbekannte[i] = (aktuellegleichung[aktuellegleichung.length - 1] - summand) / aktuellegleichung[aktuellegleichung.length - i - 2];
         }
 
-        String loesungText = "L = {(";
+        StringBuilder loesungText = new StringBuilder("L = {(");
         for(int i = unbekannte.length-1; i > 0; i--){
-            loesungText += unbekannte[i] + " | ";
+            loesungText.append(unbekannte[i]).append(" | ");
         }
-        loesungText += unbekannte[0] + ")}";
+        loesungText.append(unbekannte[0]).append(")}");
 
-        ergebnisLabel.setText(loesungText);
+        ergebnisLabel.setText(loesungText.toString());
 
         //printMatrix(km);
         //printMatrix(koeffizientenMatrix);
     }
 
     private void printMatrix(double[][] m){
-        for(int i = 0; i < m.length; i++){
-            for (int j = 0; j < m[i].length; j++){
-                System.out.print(m[i][j] + "|");
+        for (double[] doubles : m) {
+            for (double aDouble : doubles) {
+                System.out.print(aDouble + "|");
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 
