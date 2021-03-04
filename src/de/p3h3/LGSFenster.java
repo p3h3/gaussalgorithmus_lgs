@@ -74,7 +74,7 @@ public class LGSFenster{
         // get screen size to make window size relative
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // stop process on close of main window
+        f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); // stop process on close of main window
         f.setSize((int) (screenSize.width * 0.5), (int) (screenSize.height * 0.5));
         f.getContentPane().add(panel);
 
